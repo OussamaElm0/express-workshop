@@ -7,6 +7,16 @@ const PORT = 8080
 
 app.use(express.json())
 
+app.get("/users/counts", async (req, res) => {
+    try {
+        const usersCount = await User.countDocuments()
+
+        return res.json({count: usersCount})
+    } catch (e){
+        return res.status(500).json({error: e.message})
+    }
+})
+
 app.get("/users", async (req, res) => {
     try {
         const users = await User.find()
