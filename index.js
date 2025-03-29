@@ -70,6 +70,22 @@ app.put("/users/:id", async (req, res) => {
     }
 })
 
+app.delete("/users/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const user = await User.findByIdAndDelete(id)
+
+        if (!user){
+            return res.status(404).json({error: "User not found!"})
+        }
+
+        return res.json({success: "User deleted successfully!"})
+    } catch (e) {
+        return res.status(500).json({error: e.message})
+    }
+})
+
 try {
     // Start the server and listen on the specified port
     app.listen(PORT, () => console.log(`Server is running on ${PORT}`))
