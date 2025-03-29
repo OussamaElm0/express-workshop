@@ -10,7 +10,21 @@ app.get("/users", async (req, res) => {
         const users = await User.find()
         res.json(users)
     } catch (e) {
-        res.json({error: e})
+        res.json({error: e.message})
+    }
+})
+
+app.get("/users/:id", async (req, res) => {
+    try {
+        const id = req.params.id
+        const user = await User.findById(id)
+
+        if(user){
+            return res.json(user)
+        }
+        return res.status(404).json({error: "User not found"})
+    } catch (e) {
+        return res.status(500).json({error: e.message})
     }
 })
 
