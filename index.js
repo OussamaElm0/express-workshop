@@ -5,10 +5,14 @@ const User = require("./User")
 const app = express()
 const PORT = 8080
 
+app.use(express.json())
+
 app.get("/users", async (req, res) => {
     try {
         const users = await User.find()
-        res.json(users)
+        res.json({
+            users: users
+        })
     } catch (e) {
         res.json({error: e.message})
     }
@@ -25,6 +29,23 @@ app.get("/users/:id", async (req, res) => {
         return res.status(404).json({error: "User not found"})
     } catch (e) {
         return res.status(500).json({error: e.message})
+    }
+})
+
+app.post("/users", async (req, res) => {
+    try {
+        const { username, email, password } = req.body
+        const user = await User.create({
+            username,
+            email,
+            password
+        })
+
+        return res.json(user)
+    } catch (e){
+        return res.status(500).json({
+            error: e.message
+        })
     }
 })
 
