@@ -49,6 +49,27 @@ app.post("/users", async (req, res) => {
     }
 })
 
+//Update username
+app.put("/users/:id", async (req, res) => {
+    try {
+        const { username } = req.body
+        const { id } = req.params
+
+        const user = await User.updateOne(
+            {
+                id
+            },
+            {
+                username: username
+            }
+        )
+
+        return res.json(user)
+    } catch (e){
+        return res.status(500).jsonn({error: e.message})
+    }
+})
+
 try {
     // Start the server and listen on the specified port
     app.listen(PORT, () => console.log(`Server is running on ${PORT}`))

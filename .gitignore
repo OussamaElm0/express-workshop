@@ -1,1 +1,4 @@
 /node_modules
+
+# A costumized file to automate running MongoDB Container, MongoDB Compass and Postman
+run.sh
