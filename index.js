@@ -3,6 +3,8 @@ require('dotenv').config();
 
 const express = require("express")
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const User = require("./User")
 
 const app = express()
@@ -45,13 +47,21 @@ app.get("/users/:id", async (req, res) => {
     }
 })
 
-app.post("/users", async (req, res) => {
+app.post("/auth/signup", async (req, res) => {
     try {
         const { username, email, password } = req.body
+        const userExists = await User.findOne({email: email})
+
+        if(userExists){
+            return res.json({error: "User with this email already exists."})
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10)
+
         const user = await User.create({
             username,
             email,
-            password
+            password: hashedPassword
         })
 
         return res.json(user)
