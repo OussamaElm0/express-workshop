@@ -6,13 +6,14 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("./User")
+const checkAuthUser = require("./authMiddleware")
 
 const app = express()
 const PORT = process.env.PORT || 8080
 
 app.use(express.json())
 
-app.get("/users/counts", async (req, res) => {
+app.get("/users/counts", checkAuthUser, async (req, res) => {
     try {
         const usersCount = await User.countDocuments()
 
