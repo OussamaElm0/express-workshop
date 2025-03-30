@@ -72,6 +72,42 @@ app.post("/auth/signup", async (req, res) => {
     }
 })
 
+app.post("/auth/login", async (req, res) => {
+    try {
+        const { email, password } = req.body
+
+        if(!(email && password)){
+            return res.json({
+                error: "All fields are required"
+            })
+        }
+        
+        const user = await User.findOne({ email: email })
+
+        if(!user){
+            return res.status(404).json({
+                error: "User not found!"
+            })
+        }
+
+        const passwordMatched = await bcrypt.compare(password, user.password)
+
+        if(!passwordMatched){
+            return res.json({
+                error: "Password doesn't match!"
+            })
+        }
+
+        const token = jwt.sign({
+            userId: user._id
+        }, process.env.SECRET_KEY)
+
+        return res.json({token})
+    } catch (e){
+        return res.status(500).json({error: e.messge})
+    }
+})
+
 //Update username
 app.put("/users/:id", async (req, res) => {
     try {
