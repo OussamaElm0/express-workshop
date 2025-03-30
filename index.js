@@ -1,9 +1,12 @@
+// Charger les variables d'environnement à partir du fichier .env
+require('dotenv').config();
+
 const express = require("express")
 const mongoose = require("mongoose")
 const User = require("./User")
 
 const app = express()
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 
 app.use(express.json())
 
@@ -101,7 +104,7 @@ try {
     app.listen(PORT, () => console.log(`Server is running on ${PORT}`))
 
     //Connect to database
-    mongoose.connect("mongodb://localhost:27017/ngos")
+    mongoose.connect(process.env.DB_URI)
     console.log("Connected to database successfully!");
 
 } catch (e){

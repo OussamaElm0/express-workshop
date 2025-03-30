@@ -1,4 +1,6 @@
 /node_modules
 
+.env 
+
 # A costumized file to automate running MongoDB Container, MongoDB Compass and Postman
 run.sh
