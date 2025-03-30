@@ -117,14 +117,17 @@ app.put("/users/:id", async (req, res) => {
 
         const user = await User.updateOne(
             {
-                id
+                _id: id
             },
             {
                 username: username
             }
         )
 
-        return res.json(user)
+        if(user.modifiedCount){
+            return res.json({message: "User updated successfully!"})
+        }
+        return res.json({error: "An error occured during the update"})
     } catch (e){
         return res.status(500).jsonn({error: e.message})
     }
