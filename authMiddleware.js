@@ -1,7 +1,7 @@
 require("dotenv").config()
 const jwt = require("jsonwebtoken")
 
-const checkAuthUser = (req, res, next) => {
+const checkAuthentication = (req, res, next) => {
     const token = req.headers['authorization']
     if(token){
         const extractedToken = token.split(" ")[1]
@@ -37,6 +37,6 @@ const checkAuthorisation = (req, res, next) => {
 }
 
 module.exports = {
-    checkAuthUser,
+    checkAuthentication,
     checkAuthorisation
 }
