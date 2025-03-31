@@ -16,4 +16,27 @@ const checkAuthUser = (req, res, next) => {
     }
 }
 
-module.exports = checkAuthUser
+const checkAuthorisation = (req, res, next) => {
+    const token = req.headers['authorization']
+    const secretKey = process.env.SECRET_KEY
+    const extractedToken = token.split(" ")[1]    
+    const { id } = req.params
+
+    jwt.verify(extractedToken, secretKey, async (err, decoded) => {
+        if (err) {
+            return res.json({ error: 'Invalid token' });
+        }
+        if(decoded.userId == id){
+            next()
+        } else {
+            return res.status(403).json({
+                error: "Not authorized."
+            })
+        }
+    });
+}
+
+module.exports = {
+    checkAuthUser,
+    checkAuthorisation
+}

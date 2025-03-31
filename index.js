@@ -6,7 +6,7 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("./User")
-const checkAuthUser = require("./authMiddleware")
+const { checkAuthUser, checkAuthorisation } = require("./authMiddleware")
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -110,7 +110,7 @@ app.post("/auth/login", async (req, res) => {
 })
 
 //Update username
-app.put("/users/:id", async (req, res) => {
+app.put("/users/:id", checkAuthorisation, async (req, res) => {
     try {
         const { username } = req.body
         const { id } = req.params
@@ -129,7 +129,7 @@ app.put("/users/:id", async (req, res) => {
         }
         return res.json({error: "An error occured during the update"})
     } catch (e){
-        return res.status(500).jsonn({error: e.message})
+        return res.status(500).json({error: e.message})
     }
 })
 
