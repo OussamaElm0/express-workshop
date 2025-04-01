@@ -50,6 +50,9 @@ express-workshop/
   ├── authMiddleware.js
 |--/models
   ├── User.js
+|--/routes
+  ├── authRoutes.js
+  ├── userRoutes.js
 |--/scripts
   ├── start.sh
 │-- .env
