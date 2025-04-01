@@ -45,11 +45,13 @@ NGOS is a university club that focuses on technology, innovation, and developmen
 ## Project Structure
 ```
 express-workshop/
-│-- authMiddleware.js
-│-- authRoutes.js
-│-- User.js
-│-- authController.js
-|-- start.sh
+|--/controllers
+|--/middlewares
+  ├── authMiddleware.js
+|--/models
+  ├── User.js
+|--/scripts
+  ├── start.sh
 │-- .env
 |-- .gitignore
 │-- package.json
