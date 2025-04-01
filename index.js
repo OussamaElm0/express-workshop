@@ -5,8 +5,8 @@ const express = require("express")
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const User = require("./User")
-const { checkAuthentication, checkAuthorisation } = require("./authMiddleware")
+const User = require("./models/User")
+const { checkAuthentication, checkAuthorisation } = require("./middlewares/authMiddleware")
 
 const app = express()
 const PORT = process.env.PORT || 8080
